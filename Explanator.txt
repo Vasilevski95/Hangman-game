@@ -1,0 +1,112 @@
+Hangman game:
+
+This is a code written in JavaScript using the React library. It is a simple hangman game that randomly selects a word from a list of words 
+and the player has to guess the word by selecting one letter at a time using the keyboard or clicking on the letters displayed on the screen. 
+The player has six chances to guess incorrectly, after which the game ends and the player loses.
+
+
+
+
+
+
+main:
+
+The first line imports the React and ReactDOM libraries. React is the core library for building user interfaces in React, 
+while ReactDOM is the library that allows us to render React components to the DOM.
+It creates a root for the React application by using the ReactDOM.createRoot method, which takes a reference to the DOM element where the application will be mounted as an argument. 
+In this case, it's document.getElementById('root').
+The render method of the createRoot function is then called to render the App component to the DOM. 
+The React.StrictMode component is used to enable strict mode, which is a development-only feature that helps highlight potential problems in the application.
+
+
+
+
+
+
+App:
+
+The code imports some components, including the HangmanDrawing, HangmanWord, and Keyboard components, as well as a list of words from a JSON file. 
+The code uses the useState hook to define the state variables for the word to guess and the guessed letters, 
+and the useEffect hook to handle keyboard events when a letter is pressed, and when the game is reset.
+The code also defines some helper functions, such as getWord(), which randomly selects a word from the list of words, and addGuessedLetter(), 
+which adds the guessed letter to the list of guessed letters.
+Finally, the code returns a div containing the HangmanDrawing, HangmanWord, and Keyboard components, as well as a message indicating whether the player has won or lost the game. 
+The components are styled using CSS, and the game logic is implemented using JavaScript.
+
+Functions and state: 
+The first part of the code sets up two pieces of state using the useState hook:
+wordToGuess represents the current word that the player is trying to guess, while guessedLetters is an array that keeps track of which letters the player has guessed so far.
+Next, the code creates a new array incorrectLetters using the filter() method, which filters the guessedLetters array to only include letters that are not present in the wordToGuess string.
+This will later be used to determine how many incorrect guesses the player has made.
+The code then creates two new variables isLoser and isWinner, which are boolean values that determine whether the player has lost or won the game. 
+isLoser is true if the number of incorrect letters in incorrectLetters is greater than or equal to 6, which represents the maximum number of incorrect guesses the player is allowed to make. 
+isWinner is true if every letter in wordToGuess is present in the guessedLetters array.
+The split() method is used to split the wordToGuess string into an array of individual letters, which is then used with the every() method to check whether each letter is present in guessedLetters.
+The code then creates a new function addGuessedLetter using the useCallback hook. This function takes a single argument letter, which represents the letter that the player has guessed. 
+It first checks whether the letter is already present in the guessedLetters array or if the player has already won or lost the game. 
+If any of these conditions are true, the function simply returns. Otherwise, it updates the guessedLetters array by adding the new letter.
+The useCallback hook is used here to optimize performance, by memoizing the function and only updating it when its dependencies (guessedLetters, isLoser, and isWinner) change.
+The next two blocks of code use the useEffect hook to add event listeners for keyboard input. 
+The first block adds a listener for any key press, and checks whether the key pressed is a lowercase letter. 
+If so, it prevents the default behavior (typing the letter in the input field) and calls the addGuessedLetter function with the pressed key.
+
+
+
+
+
+
+HangmanWord:
+
+This code exports a React component named HangmanWord, which takes three props:
+
+guessedLetters - an array of strings representing the letters that the user has guessed so far.
+wordToGuess - a string representing the word that the user is trying to guess.
+reveal - a boolean flag indicating whether or not the word should be revealed. 
+If set to true, all letters in the word will be shown, regardless of whether or not the user has guessed them correctly.
+The HangmanWord component renders the wordToGuess string as a series of individual letters. 
+For each letter, a span element is created with a black border bottom style. 
+The actual letter is then added as a child span element, with its visibility determined by whether or not it has been guessed correctly or if the reveal flag is set to true. 
+If the letter has not been guessed correctly and reveal is true, the letter is displayed in red to indicate that it was part of the word, but not guessed correctly.
+The component uses inline styles to set the font size, font weight, text transform, and font family of the displayed text. 
+The gap property is used to add a small amount of spacing between the letter spans.
+
+
+
+
+
+
+HangmanDrawing:
+
+The HangmanDrawing component is responsible for rendering the graphical representation of the hangman game. 
+It takes in one prop, numberOfGuesses, which is an integer representing the number of incorrect guesses made by the player.
+The BODY_PARTS constant holds an array of JSX elements representing the different parts of the hangman's body. 
+The array is sliced to display only a certain number of parts, based on the number of incorrect guesses.
+The HEAD constant is a circular div with a black border and is positioned to the right of the container div. 
+The BODY constant is a vertical black bar representing the hangman's body, positioned below the head. 
+The RIGHT_ARM and LEFT_ARM constants are horizontal bars representing the hangman's arms, positioned below the body, with a slight rotation applied to them. 
+The RIGHT_LEG and LEFT_LEG constants are horizontal bars representing the hangman's legs, positioned below the arms, with a more significant rotation applied to them.
+In summary, the HangmanDrawing component is responsible for rendering the visual representation of the hangman game. 
+It uses a combination of CSS styles and JSX elements to position and style the different parts of the hangman's body and the gallows.
+
+
+
+
+
+
+Keyboard:
+
+This code exports a React component called Keyboard that takes in several props:
+activeLetters (string array) - an array of letters that have already been guessed correctly and are currently active
+disableEverything (boolean) - a boolean that determines whether or not to disable all buttons in the keyboard
+inactiveLetters (string array) - an array of letters that have already been guessed incorrectly and are currently inactive
+addGuessedLetter (function) - a function that takes in a letter (string) and adds it to the guessed letters list.
+The component itself is a grid of buttons, with each button representing a letter of the alphabet. 
+Each button has an onClick function that calls the addGuessedLetter function with the corresponding letter as an argument. 
+Buttons that correspond to already guessed letters are marked as active and cannot be clicked again, 
+while buttons that correspond to incorrectly guessed letters are marked as inactive and also cannot be clicked.
+The component also has an optional disableEverything prop that, if set to true, disables all buttons in the keyboard. 
+This can be useful if, for example, the game has ended and the user is no longer allowed to make any more guesses.
+
+
+
+
